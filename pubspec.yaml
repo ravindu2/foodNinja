@@ -1,0 +1,26 @@
+name: ninja_delivery
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.5 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  simple_gradient_text: ^1.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/Pattern.png
+    - assets/main_logo.png
+    - assets/facebook.png
+    - assets/google_icon.png
