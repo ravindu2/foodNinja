@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:ninja_delivery/screen/login_screen.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController usernameController = TextEditingController();
+class _RegisterState extends State<Register> {
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> _login() async {
+  Future<void> _register() async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: usernameController.text,
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: emailController.text,
         password: passwordController.text,
       );
 
-      print('User logged in: ${userCredential.user?.email}');
-      // Navigate to the home screen or perform other actions after successful login.
+      print('User registered: ${userCredential.user?.email}');
+      // You can navigate to another screen or perform additional actions upon successful registration.
     } catch (e) {
-      print('Error during login: $e');
-      // Handle login errors, e.g., display an error message to the user.
+      print('Error during registration: $e');
+      // Handle registration errors, e.g., display an error message to the user.
     }
   }
 
@@ -78,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 30,
                     ),
                     const Text(
-                      "Login To Your Account",
+                      "Sign Up For Free",
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -94,7 +97,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          hintText: 'Enter your user name',
+                          hintText: 'Username',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 5),
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          hintText: 'Email',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                         ),
                       ),
                     ),
@@ -105,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
-                          hintText: 'Enter your Password',
+                          hintText: 'Password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -116,43 +132,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       "or continue with",
                       style: TextStyle(fontSize: 12),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Image.asset("assets/facebook.png"),
-                              Text("facebook")
-                            ],
-                          ),
-                          style: OutlinedButton.styleFrom(side: BorderSide()),
-                        ),
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Image.asset("assets/google_icon.png"),
-                                Text("Google"),
-                              ],
-                            ))
-                        // Add your social media login buttons here
-                      ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: _register,
+                      child: Text("Register"),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     GestureDetector(
-                      onTap: () {},
-                      child: Text("Forget Your Password?"),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: _login,
-                      child: Text("Login"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      },
+                      child: Text("already have an account?"),
                     ),
                   ],
                 ),
